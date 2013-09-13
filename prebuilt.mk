@@ -32,7 +32,10 @@ add-prebuilt-etc-files:
 	$(hide) cp -f $(SYSOUT_DIR)/etc/apns-conf.xml $(ZIP_DIR)/system/etc/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/icons_alias.xml $(ZIP_DIR)/system/etc/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.lewa.software.themes.xml $(ZIP_DIR)/system/etc/permissions/
-	
+
+add-lewa-sqlite:
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libsqlite.so $(ZIP_DIR)/system/lib/
+
 add-prebuilt-google-files:
 	@echo To add prebuilt google files
 	$(hide) cp -f $(SYSOUT_DIR)/app/OneTimeInitializer.apk $(ZIP_DIR)/system/app/

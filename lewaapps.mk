@@ -34,6 +34,7 @@ private-lewa-apps := AppStore \
 					 LewaSecurity2 \
 					 LewaSoundRecorder \
 					 LewaSystemClean \
+					 LewaSystemCleanService \
 					 LewaUpdater \
 					 LewaWeather \
 					 LocationProvider \

@@ -1,21 +1,17 @@
-private-lewa-apps := AppStore \
+private-lewa-apps := LewaAppStore \
 					 Bluetooth \
-					 Cit \
+					 LewaCit \
 					 CalendarProvider \
-					 CleanMemory \
 					 ContactsProvider \
-					 DeskClock \
+					 LewaDeskClock \
 					 DownloadProvider \
 					 DownloadProviderUi \
-					 Flashlight \
-					 GameCenter \
+					 LewaFlashlight \
+					 LewaGameCenter \
 					 GexinService2 \
 					 GexinService \
-					 Guide \
-					 Intercept \
-					 Guide \
-					 Intercept \
-					 LabiSync \
+					 LewaIntercept \
+					 LewaLabiSync \
 					 LatinIME \
 					 LewaLauncherX \
 					 LewaAntitheft \
@@ -43,16 +39,16 @@ private-lewa-apps := AppStore \
 					 Phone \
 					 Provision \
 					 PIM \
-					 Power+ \
-					 QrcodeScanner \
-					 Search \
+					 LewaPower+ \
+					 LewaQrcodeScanner \
+					 LewaSearch \
 					 Settings \
 					 SettingsProvider \
 					 SystemUI \
 					 TelephonyProvider \
-					 ThemeChooser \
-					 ThemeManager \
-					 VirusDefense
+					 LewaThemeChooser \
+					 LewaThemeManager \
+					 LewaVirusDefense
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

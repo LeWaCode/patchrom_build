@@ -22,6 +22,9 @@ add-prebuilt-libraries:
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libphoneloc_jni.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libsmschecker-1.0.1.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libsmsparser-1.0.0.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libphoneloc_jni.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/liblewa_imageutils.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/liblewa_shell.so $(ZIP_DIR)/system/lib/
 
 add-prebuilt-media:
 	@echo To add prebuilt media files
@@ -32,10 +35,7 @@ add-prebuilt-etc-files:
 	$(hide) cp -f $(SYSOUT_DIR)/etc/apns-conf.xml $(ZIP_DIR)/system/etc/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/icons_alias.xml $(ZIP_DIR)/system/etc/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.lewa.software.themes.xml $(ZIP_DIR)/system/etc/permissions/
-
-add-lewa-sqlite:
-	$(hide) cp -f $(SYSOUT_DIR)/lib/libsqlite.so $(ZIP_DIR)/system/lib/
-
+	
 add-prebuilt-google-files:
 	@echo To add prebuilt google files
 	$(hide) cp -f $(SYSOUT_DIR)/app/OneTimeInitializer.apk $(ZIP_DIR)/system/app/
@@ -62,6 +62,10 @@ add-prebuilt-google-files:
 	$(hide) cp -f $(SYSOUT_DIR)/framework/com.google.android.maps.jar $(ZIP_DIR)/system/framework/
 	$(hide) cp -f $(SYSOUT_DIR)/framework/com.google.android.media.effects.jar $(ZIP_DIR)/system/framework/
 	$(hide) cp -f $(SYSOUT_DIR)/framework/com.google.widevine.software.drm.jar $(ZIP_DIR)/system/framework/
+
+add-prebuilt-lewa-sqlite-library:
+	@echo To add prebuilt lewa sqlite library
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libsqlite.so $(ZIP_DIR)/system/lib/
 
 add-lewa-prebuilt: add-prebuilt-app add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files
 	@echo Add lewa prebuilt completed!

@@ -20,7 +20,6 @@ private-lewa-apps := LewaAppStore \
 					 LewaDefaultTheme \
 					 LewaFileManager \
 					 LewaLockScreen \
-					 LewaPlayer \
 					 LewaNetworkManager \
 					 LewaPackageInstaller \
 					 LewaPermManager \

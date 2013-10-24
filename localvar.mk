@@ -8,12 +8,14 @@
 # 	local-lewa-removed-apps
 # 	local-lewa-apps (DEPRECATED)
 # 	local-lewa-modified-apps
+# 	local-lewa-device
+# 	local-lewa-partner
 # 	local-phone-apps
 # 	local-remove-apps
 # 	local-pre-zip
 # 	local-after-zip
 # 	local-density  (HDPI or XHDPI)
-# See i9100/makefile as an example
+# See m1s/makefile as an example
 #
 include $(PORT_BUILD)/lewaapps.mk
 
@@ -43,7 +45,6 @@ DENSITY := $(strip $(local-density))
 ifneq ($(DENSITY), HDPI)
     DENSITY := XHDPI
 endif
-
 
 ACT_PRE_ZIP  := $(strip $(local-pre-zip))
 ACT_PRE_ZIP  += pre-zip-misc
@@ -138,4 +139,13 @@ ifeq ($(strip $(include_thirdpart_app)),true)
 	INCLUDE_THIRDPART_APP := true
 else
 	INCLUDE_THIRDPART_APP := false
+endif
+
+PARTNER := $(strip $(local-lewa-partner))
+ifeq ($(PARTNER),)
+    PARTNER := Lewa
+endif
+
+ifeq ($(strip $(PORT_PRODUCT)),Unknown)
+PORT_PRODUCT := $(strip $(local-lewa-device))
 endif

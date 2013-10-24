@@ -368,7 +368,7 @@ remove-rund-apks:
 pre-zip-misc: set-build-prop
 
 set-build-prop:
-	$(SETPROP) $(PROP_FILE) $(PORT_PRODUCT) $(BUILD_NUMBER)
+	$(SETPROP) $(PROP_FILE) $(PORT_PRODUCT) $(BUILD_NUMBER) $(PARTNER)
 
 rewrite-lib:
 	$(hide) if [ $(REWRITE_SKIA_LIB) = "true" ]; then \

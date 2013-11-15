@@ -147,5 +147,7 @@ ifeq ($(PARTNER),)
 endif
 
 ifeq ($(strip $(PORT_PRODUCT)),Unknown)
-PORT_PRODUCT := $(strip $(local-lewa-device))
+    ifneq ($(strip $(local-lewa-device)),)
+        PORT_PRODUCT := $(strip $(local-lewa-device))
+    endif
 endif

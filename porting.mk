@@ -33,6 +33,7 @@ RM_REDEF    := $(TOOL_DIR)/remove_redef.py $(VERBOSE)
 PATCH_LEWA_FRAMEWORK  := $(TOOL_DIR)/patch_lewa_framework.sh $(INFO)
 RLZ_SOURCE  := $(TOOL_DIR)/release_source.sh $(VERBOSE)
 FIX_PLURALS := $(TOOL_DIR)/fix_plurals.sh $(VERBOSE)
+RESTORE_OBSOLETE_KEYGUARD := $(TOOL_DIR)/restore_obsolete_keyguard.sh $(VERBOSE)
 BUILD_TARGET_FILES := $(TOOL_DIR)/build_target_files.sh $(INFO)
 ADB         := adb
 #< End of global variable
@@ -49,7 +50,6 @@ LEWA_RES_DIR:=$(LEWA_SRC_DIR)/frameworks/lewa/core/res/res
 OVERLAY_RES_DIR:=overlay/framework-res/res
 OVERLAY_LEWA_RES_DIR:=overlay/lewa-res/res
 
-LEWA_JARS   := services android.policy framework framework_ext
 JARS        := $(LEWA_JARS) $(PHONE_JARS)
 BLDAPKS     := $(addprefix $(TMP_DIR)/,$(addsuffix .apk,$(APPS)))
 JARS_OUTDIR := $(addsuffix .jar.out,$(LEWA_JARS))
@@ -225,13 +225,7 @@ $(TMP_DIR)/lewa-res.apk: $(TMP_DIR)/framework-res.apk $(OUT_JAR_PATH)/lewa-res.a
 	$(hide) for dir in `ls -d $(OVERLAY_LEWA_RES_DIR)/values*`; do\
 		$(MERGE_RES) $$dir $(TMP_DIR)/lewa-res/res/`basename $$dir` $(MERGE_RULE); \
 	done
-	@echo "  - 2" >> $(TMP_DIR)/lewa-res/apktool.yml
-	@echo "  - 3" >> $(TMP_DIR)/lewa-res/apktool.yml
-	@echo "  - 4" >> $(TMP_DIR)/lewa-res/apktool.yml
-	@echo "  - 5" >> $(TMP_DIR)/lewa-res/apktool.yml
-	@echo "  - 6" >> $(TMP_DIR)/lewa-res/apktool.yml
-	@echo "  - 7" >> $(TMP_DIR)/lewa-res/apktool.yml
-	@echo "  - 8" >> $(TMP_DIR)/lewa-res/apktool.yml
+	$(hide) sed -i "s/- 1/- 1\n  - 2\n  - 3\n  - 4\n  - 5\n  - 6\n  - 7\n  - 8/g" $(TMP_DIR)/lewa-res/apktool.yml
 	$(APKTOOL) b $(TMP_DIR)/lewa-res $@
 	@echo "<<< build $@ completed!"
 

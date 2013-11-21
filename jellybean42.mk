@@ -35,6 +35,7 @@ private-lewa-apps := LewaAppStore \
 					 LocationProvider \
 					 MmsFavoriteProvider \
 					 MediaProvider \
+					 NetworkLocation \
 					 Phone \
 					 Provision \
 					 PIM \
@@ -68,3 +69,9 @@ private-preinstall-apps := BaiduMap \
 					 GNotes \
 					 iReader \
 					 VoiceAssistant
+
+private-lewa-jars := android.policy \
+					 framework \
+					 framework_ext \
+					 telephony-common \
+					 services

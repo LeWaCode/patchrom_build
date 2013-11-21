@@ -17,7 +17,7 @@
 # 	local-density  (HDPI or XHDPI)
 # See m1s/makefile as an example
 #
-include $(PORT_BUILD)/lewaapps.mk
+include $(PORT_ROOT)/build/$(PATCHROM_BRANCH).mk
 
 ERR_REPORT   :=
 VERIFY_OTA   :=
@@ -40,9 +40,11 @@ LEWAAPPS     := $(strip \
                                  $(filter-out $(strip $(local-lewa-removed-apps)),$(strip $(private-lewa-apps)))) \
 			     )
 
+LEWA_JARS := $(strip $(private-lewa-jars))
+
 # specify the density for apps, HDPI OR XHDPI, default is XHDPI
 DENSITY := $(strip $(local-density))
-ifneq ($(DENSITY), HDPI)
+ifeq ($(DENSITY),)
     DENSITY := XHDPI
 endif
 

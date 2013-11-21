@@ -25,6 +25,7 @@ add-prebuilt-libraries:
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libphoneloc_jni.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblewa_imageutils.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblewa_shell.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/liblocSDK4.so $(ZIP_DIR)/system/lib/
 
 add-prebuilt-media:
 	@echo To add prebuilt media files

@@ -8,8 +8,6 @@ private-lewa-apps := LewaAppStore \
 					 DownloadProviderUi \
 					 LewaFlashlight \
 					 LewaGameCenter \
-					 GexinService2 \
-					 GexinService \
 					 LewaIntercept \
 					 LewaLabiSync \
 					 LatinIME \
@@ -23,7 +21,6 @@ private-lewa-apps := LewaAppStore \
 					 LewaNetworkManager \
 					 LewaPackageInstaller \
 					 LewaPermManager \
-					 LewaPlayer \
 					 LewaPond \
 					 LewaPush \
 					 LewaSecurity2 \
@@ -48,7 +45,8 @@ private-lewa-apps := LewaAppStore \
 					 TelephonyProvider \
 					 LewaThemeChooser \
 					 LewaThemeManager \
-					 LewaVirusDefense
+					 LewaVirusDefense \
+					 FusedLocation \
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

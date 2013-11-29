@@ -1,5 +1,5 @@
 # The currently supported products
-PRODUCTS := m1s
+PRODUCTS := m1s coolpad5890
 
 PRODUCTS := $(strip $(PRODUCTS))
 PRODUCT  := $(strip $(PORT_PRODUCT))

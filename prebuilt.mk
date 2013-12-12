@@ -1,7 +1,12 @@
-add-prebuilt-app:
+add-prebuilt-app-jellybean:
 	@echo To add prebuilt apps
 	$(hide) mkdir -p $(ZIP_DIR)/data/media
 	$(hide) cp -rf $(DATAOUT_DIR)/media/preinstall_apps/ $(ZIP_DIR)/data/media/
+
+add-prebuilt-app-jellybean42:
+	@echo To add prebuilt apps
+	$(hide) mkdir -p $(ZIP_DIR)/system/vendor/operator/app
+	$(hide) cp -f $(DATAOUT_DIR)/media/preinstall_apps/* $(ZIP_DIR)/system/vendor/operator/app/
 
 add-prebuilt-binaries:
 	@echo To add prebuilt binaries
@@ -26,6 +31,8 @@ add-prebuilt-libraries:
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblewa_imageutils.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblewa_shell.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblocSDK4.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libOfflineWordSelection.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libapkpatch.so $(ZIP_DIR)/system/lib/
 
 add-prebuilt-media:
 	@echo To add prebuilt media files
@@ -68,5 +75,5 @@ add-prebuilt-lewa-sqlite-library:
 	@echo To add prebuilt lewa sqlite library
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libsqlite.so $(ZIP_DIR)/system/lib/
 
-add-lewa-prebuilt: add-prebuilt-app add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files
+add-lewa-prebuilt: add-prebuilt-app-$(PATCHROM_BRANCH) add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files
 	@echo Add lewa prebuilt completed!

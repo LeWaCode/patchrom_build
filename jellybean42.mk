@@ -47,6 +47,7 @@ private-lewa-apps := LewaAppStore \
 					 LewaThemeManager \
 					 LewaVirusDefense \
 					 FusedLocation \
+					 LewaPlayer \
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

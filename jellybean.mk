@@ -8,8 +8,6 @@ private-lewa-apps := LewaAppStore \
 					 DownloadProviderUi \
 					 LewaFlashlight \
 					 LewaGameCenter \
-					 GexinService2 \
-					 GexinService \
 					 LewaIntercept \
 					 LewaLabiSync \
 					 LatinIME \

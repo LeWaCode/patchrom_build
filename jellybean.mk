@@ -46,7 +46,8 @@ private-lewa-apps := LewaAppStore \
 					 TelephonyProvider \
 					 LewaThemeChooser \
 					 LewaThemeManager \
-					 LewaVirusDefense
+					 LewaVirusDefense \
+					 Email
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

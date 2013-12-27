@@ -27,7 +27,7 @@ usage:
 	@echo "	make -e log=quiet|info|verbose - to control the output from make command"
 
 # Target to prepare porting workspace
-workspace: apktool-if $(JARS_OUTDIR) $(APPS_OUTDIR) fix-framework-res
+workspace: apktool-if $(JARS_OUTDIR) $(APPS_OUTDIR) fix-framework-res restore-obsolete-keyguard
 	@echo Prepare workspace completed!
 
 # Target to install apktool framework 

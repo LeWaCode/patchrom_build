@@ -49,6 +49,7 @@ private-lewa-apps := LewaAppStore \
 					 FusedLocation \
 					 LewaPlayer \
 					 LewaCompass \
+					 Email \
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

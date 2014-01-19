@@ -42,6 +42,11 @@ add-prebuilt-etc-files:
 	@echo To add prebuilt files under etc
 	$(hide) cp -f $(SYSOUT_DIR)/etc/icons_alias.xml $(ZIP_DIR)/system/etc/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.lewa.software.themes.xml $(ZIP_DIR)/system/etc/permissions/
+	$(hide) cp -f $(SYSOUT_DIR)/etc/system_fonts.xml $(ZIP_DIR)/system/etc/
+
+add-prebuilt-fonts:
+	@echo To add prebuilt fonts:
+	$(hide) cp -f $(SYSOUT_DIR)/fonts/NeoSans-Light.otf $(ZIP_DIR)/system/fonts/
 	
 add-prebuilt-google-files:
 	@echo To add prebuilt google files
@@ -74,5 +79,5 @@ add-prebuilt-lewa-sqlite-library:
 	@echo To add prebuilt lewa sqlite library
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libsqlite.so $(ZIP_DIR)/system/lib/
 
-add-lewa-prebuilt: add-prebuilt-app-$(PATCHROM_BRANCH) add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files
+add-lewa-prebuilt: add-prebuilt-app-$(PATCHROM_BRANCH) add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files add-prebuilt-fonts
 	@echo Add lewa prebuilt completed!

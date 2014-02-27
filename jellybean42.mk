@@ -50,6 +50,7 @@ private-lewa-apps := LewaAppStore \
 					 LewaPlayer \
 					 LewaCompass \
 					 Email \
+					 LewaSensorProvider
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

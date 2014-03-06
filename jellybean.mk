@@ -48,7 +48,7 @@ private-lewa-apps := LewaAppStore \
 					 LewaThemeManager \
 					 LewaVirusDefense \
 					 Email \
-					 LewaSensorProvider
+                     LewaSensorProvider
 
 private-google-frameworks := OneTimeInitializer \
 					 NetworkLocation \

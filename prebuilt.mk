@@ -50,21 +50,34 @@ add-prebuilt-fonts:
 	
 add-prebuilt-google-files:
 	@echo To add prebuilt google files
+	$(hide) cp -f $(SYSOUT_DIR)/app/OneTimeInitializer.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/NetworkLocation.apk $(ZIP_DIR)/system/app/
+	$(hide) cp -f $(SYSOUT_DIR)/app/MediaUploader.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/ChromeBookmarksSyncAdapter.apk $(ZIP_DIR)/system/app/
+	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleBackupTransport.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleCalendarSyncAdapter.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleContactsSyncAdapter.apk $(ZIP_DIR)/system/app/
+	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleFeedback.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleLoginService.apk $(ZIP_DIR)/system/app/
+	$(hide) cp -f $(SYSOUT_DIR)/app/GooglePartnerSetup.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleServicesFramework.apk $(ZIP_DIR)/system/app/
+	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleTTS.apk $(ZIP_DIR)/system/app/
+	$(hide) cp -f $(SYSOUT_DIR)/app/Microbes.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.google.android.maps.xml $(ZIP_DIR)/system/etc/permissions/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.google.android.media.effects.xml $(ZIP_DIR)/system/etc/permissions/
+	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.google.widevine.software.drm.xml $(ZIP_DIR)/system/etc/permissions/
+	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.google.android.maps.xml $(ZIP_DIR)/system/etc/permissions/
+	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.google.android.media.effects.xml $(ZIP_DIR)/system/etc/permissions/
+	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/com.google.widevine.software.drm.xml $(ZIP_DIR)/system/etc/permissions/
 	$(hide) cp -f $(SYSOUT_DIR)/etc/permissions/features.xml $(ZIP_DIR)/system/etc/permissions/
+	$(hide) cp -f $(SYSOUT_DIR)/etc/g.prop $(ZIP_DIR)/system/etc/
 	$(hide) cp -f $(SYSOUT_DIR)/framework/com.google.android.maps.jar $(ZIP_DIR)/system/framework/
 	$(hide) cp -f $(SYSOUT_DIR)/framework/com.google.android.media.effects.jar $(ZIP_DIR)/system/framework/
+	$(hide) cp -f $(SYSOUT_DIR)/framework/com.google.widevine.software.drm.jar $(ZIP_DIR)/system/framework/
 
 add-prebuilt-lewa-sqlite-library:
 	@echo To add prebuilt lewa sqlite library
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libsqlite.so $(ZIP_DIR)/system/lib/
 
-add-lewa-prebuilt: add-prebuilt-app-$(PATCHROM_BRANCH) add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files add-prebuilt-fonts add-prebuilt-google-files
+add-lewa-prebuilt: add-prebuilt-app-$(PATCHROM_BRANCH) add-prebuilt-binaries add-prebuilt-libraries add-prebuilt-media add-prebuilt-etc-files add-prebuilt-fonts
 	@echo Add lewa prebuilt completed!

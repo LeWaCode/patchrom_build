@@ -153,3 +153,8 @@ ifeq ($(strip $(PORT_PRODUCT)),Unknown)
         PORT_PRODUCT := $(strip $(local-lewa-device))
     endif
 endif
+
+OTA_ASSERT_DEVICE := $(strip $(local-ota-assert-device))
+ifeq ($(OTA_ASSERT_DEVICE),)
+    OTA_ASSERT_DEVICE := auto
+endif

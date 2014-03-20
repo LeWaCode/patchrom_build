@@ -51,7 +51,8 @@ private-lewa-apps := \
             LewaPlayer \
             LewaCompass \
             Email \
-            LewaSensorProvider
+            LewaSensorProvider \
+            LewaBirdView
 
 private-google-frameworks := \
             OneTimeInitializer \

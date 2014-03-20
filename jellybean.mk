@@ -49,7 +49,8 @@ private-lewa-apps := \
             LewaThemeManager \
             LewaVirusDefense \
             Email \
-            LewaSensorProvider
+            LewaSensorProvider \
+            LewaBirdView
 
 private-google-frameworks := \
             OneTimeInitializer \

@@ -38,7 +38,7 @@ BUILD_TARGET_FILES := $(TOOL_DIR)/build_target_files.sh $(INFO)
 ADB         := adb
 #< End of global variable
 
-ROM_BUILD_NUMBER  := $(shell date +%Y%m%d.%H%M%S)
+ROM_BUILD_NUMBER  := $(shell date +%y.%m.%d)
 
 ifeq ($(USE_ANDROID_OUT),true)
     LEWA_SRC_DIR:=$(ANDROID_TOP)
@@ -377,7 +377,7 @@ target_files: | $(ZIP_DIR)
 target_files: $(TMP_DIR)/lewa-res.apk $(ZIP_BLDJARS) $(TOZIP_APKS) add-lewa-prebuilt $(ACT_PRE_ZIP)
 
 # Target to make zipfile which is all signed by testkey. convenient for developement and debug
-zipfile: BUILD_NUMBER := 01.$(ROM_BUILD_NUMBER)
+zipfile: BUILD_NUMBER := $(ROM_BUILD_NUMBER)
 zipfile: target_files $(TMP_DIR)/sign-zipfile-dir
 	$(BUILD_TARGET_FILES) $(INCLUDE_THIRDPART_APP) -n $(OUT_ZIP_FILE)
 	@echo The output zip file is: $(OUT_ZIP)
@@ -388,7 +388,7 @@ $(TMP_DIR)/sign-zipfile-dir:
 	#@touch $@
 
 # Target to test if full ota package will be generate
-fullota: BUILD_NUMBER := 02.$(ROM_BUILD_NUMBER)
+fullota: BUILD_NUMBER := $(ROM_BUILD_NUMBER)
 fullota: target_files
 	@echo ">>> To build out target file: fullota.zip ..."
 	$(BUILD_TARGET_FILES) $(INCLUDE_THIRDPART_APP) fullota.zip

@@ -33,6 +33,9 @@ add-prebuilt-libraries:
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblocSDK4.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libOfflineWordSelection.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libapkpatch.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libaudiocore.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libaudiofp.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libBDmfemusic_V1.so $(ZIP_DIR)/system/lib/
 
 add-prebuilt-media:
 	@echo To add prebuilt media files

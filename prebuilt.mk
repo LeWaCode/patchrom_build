@@ -39,6 +39,8 @@ add-prebuilt-libraries:
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libams-1.1.0-legacy.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/libcryptor-1.0.0-legacy.so $(ZIP_DIR)/system/lib/
 	$(hide) cp -f $(SYSOUT_DIR)/lib/liblocation-1.0.0-legacy.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libgetuiext.so $(ZIP_DIR)/system/lib/
+	$(hide) cp -f $(SYSOUT_DIR)/lib/libSynclewa.so $(ZIP_DIR)/system/lib/
 
 add-prebuilt-media:
 	@echo To add prebuilt media files

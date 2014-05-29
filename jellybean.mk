@@ -50,7 +50,8 @@ private-lewa-apps := \
             LewaVirusDefense \
             Email \
             LewaSensorProvider \
-            LewaBirdView
+            LewaBirdView \
+            LewaCloud
 
 private-google-frameworks := \
             OneTimeInitializer \

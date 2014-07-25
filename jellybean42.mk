@@ -55,6 +55,7 @@ private-lewa-apps := \
             LewaBirdView \
             LewaGallery2 \
             LewaCamera \
+            LewaCloud \
             MeikaCam
 
 private-google-frameworks := \

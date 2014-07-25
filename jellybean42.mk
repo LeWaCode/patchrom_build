@@ -54,7 +54,8 @@ private-lewa-apps := \
             LewaSensorProvider \
             LewaBirdView \
             LewaGallery2 \
-            LewaCamera
+            LewaCamera \
+            MeikaCam
 
 private-google-frameworks := \
             OneTimeInitializer \

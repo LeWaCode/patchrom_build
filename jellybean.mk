@@ -51,8 +51,7 @@ private-lewa-apps := \
             Email \
             LewaSensorProvider \
             LewaBirdView \
-            LewaCloud \
-            MeikaCam
+            LewaCloud
 
 private-google-frameworks := \
             OneTimeInitializer \

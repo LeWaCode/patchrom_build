@@ -51,7 +51,10 @@ private-lewa-apps := \
             Email \
             LewaSensorProvider \
             LewaBirdView \
-            LewaCloud
+            LewaCloud \
+            LewaYellowPages \
+            YellowpagesProvider \
+            LewaRoundR
 
 private-google-frameworks := \
             OneTimeInitializer \

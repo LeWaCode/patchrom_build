@@ -54,7 +54,7 @@ private-lewa-apps := \
             LewaCloud \
             LewaYellowPages \
             YellowpagesProvider \
-            LewaRoundR
+            LewaRoundR      
 
 private-google-frameworks := \
             OneTimeInitializer \

@@ -53,8 +53,6 @@ private-lewa-apps := \
             Email \
             LewaSensorProvider \
             LewaBirdView \
-            LewaGallery2 \
-            LewaCamera \
             LewaYellowPages \
             YellowpagesProvider \
             LewaRoundR

@@ -4,8 +4,10 @@
 # 	local-zip-file 		MUST be defined
 # 	local-out-zip-file
 # 	local-modified-apps
+# 	local-modified-priv-apps
 # 	local-modified-jars
 # 	local-lewa-removed-apps
+#	local-lewa-removed-priv-apps
 # 	local-lewa-apps (DEPRECATED)
 # 	local-lewa-modified-apps
 # 	local-lewa-device
@@ -34,10 +36,15 @@ endif
 
 APPS         := $(strip $(local-modified-apps))
 ALL_LEWAAPPS := $(strip $(private-lewa-apps))
+ALL_PRIV_LEWAAPPS := $(strip $(private-lewa-priv-apps))
 LEWAAPPS_MOD := $(strip $(local-lewa-modified-apps))
 LEWAAPPS     := $(strip \
                     $(filter-out $(strip $(local-lewa-modified-apps)), \
                                  $(filter-out $(strip $(local-lewa-removed-apps)),$(strip $(private-lewa-apps)))) \
+			     )
+PRIV_LEWAAPPS:= $(strip \
+                    $(filter-out $(strip $(local-lewa-modified-apps)), \
+                                 $(filter-out $(strip $(local-lewa-removed-priv-apps)),$(strip $(private-lewa-priv-apps)))) \
 			     )
 
 LEWA_JARS := $(strip $(local-lewa-jars))

@@ -16,7 +16,7 @@ STOCKROM_DIR := $(basename $(ZIP_FILE))
 
 # Tool alias used in the makefile
 APKTOOL     := $(TOOL_DIR)/apktool $(APK_VERBOSE)
-AAPT        := aapt
+AAPT        := $(TOOL_DIR)/aapt
 SIGN        := $(TOOL_DIR)/sign.sh $(VERBOSE)
 ADDLEWA     := $(TOOL_DIR)/add_lewa_smail.sh $(VERBOSE)
 PREPARE_PRELOADED_CLASSES := $(TOOL_DIR)/prepare_preloaded_classes.sh $(VERBOSE)
@@ -47,7 +47,7 @@ else
 endif
 LEWA_OVERLAY_RES_DIR:=$(LEWA_SRC_DIR)/frameworks/lewa/overlay/frameworks/base/core/res/res
 LEWA_RES_DIR:=$(LEWA_SRC_DIR)/frameworks/lewa/core/res/res
-OVERLAY_RES_DIR:=overlay/framework-res/res
+OVERLAY_RES_DIR:=overlay/framework-res/res  $(LEWA_OVERLAY_RES_DIR)
 OVERLAY_LEWA_RES_DIR:=overlay/lewa-res/res
 
 JARS        := $(LEWA_JARS) $(PHONE_JARS)
@@ -155,6 +155,7 @@ endef
 # $1: the apk name, such as LogsProvider
 # $2: the dir name, might be different from apk name
 # $3: to specify if the smali files should be decoded from LEWA first
+# $4: to specify app dir, for kitkat only
 define APP_template
 source-files-for-$(2) := $$(call all-files-under-dir,$(2))
 $(TMP_DIR)/$(1).apk: $$(source-files-for-$(2)) $(3) | $(TMP_DIR)
@@ -165,16 +166,16 @@ $(TMP_DIR)/$(1).apk: $$(source-files-for-$(2)) $(3) | $(TMP_DIR)
 	$(APKTOOL) b  $(TMP_DIR)/$(2) $$@
 	@echo "9Patch png fix $$@..."
 ifeq ($(3),)
-	$(FIX_9PATCH_PNG) $(1) $(STOCKROM_DIR)/system/app $(TMP_DIR)
+	$(FIX_9PATCH_PNG) $(1) $(STOCKROM_DIR)/system/$(4) $(TMP_DIR)
 else
-	$(FIX_9PATCH_PNG) $(1) $(OUT_APK_PATH) $(TMP_DIR) $(1)/res
+	$(FIX_9PATCH_PNG) $(1) $(OUT_APK_PATH:app=$(4)) $(TMP_DIR) $(1)/res
 endif
 	@echo "fix $$@ completed!"
 	@echo "<<< build $$@ completed!"
 
-$(3): $(OUT_APK_PATH)/$(1).apk
+$(3): $(OUT_APK_PATH:app=$(4))/$(1).apk
 	$(hide) rm -rf $(3)
-	$(APKTOOL) d -t lewa -f $(OUT_APK_PATH)/$(1).apk $(3)
+	$(APKTOOL) d -t lewa -f $(OUT_APK_PATH:app=$(4))/$(1).apk $(3)
 	$(hide) sed -i "/tag:/d" $(3)/apktool.yml
 	$(PATCH_LEWA_APP) $(2) $(3)
 
@@ -190,24 +191,14 @@ $(TMP_DIR)/framework-res.apk: $(TMP_DIR)/apktool-if $(framework-res-source-files
 	@echo ">>> build $@..."
 	$(hide) rm -rf $(TMP_DIR)/framework-res
 	$(hide) cp -r framework-res $(TMP_DIR)
-	@echo add lewa overlay resources
-	$(hide) for dir in `ls -d $(LEWA_OVERLAY_RES_DIR)/[^v]*`; do\
-		cp -r $$dir $(TMP_DIR)/framework-res/res; \
-		$(ADDLEWARES)  $$dir $(TMP_DIR)/framework-res/res; \
-	done
-	$(hide) for dir in `ls -d $(LEWA_OVERLAY_RES_DIR)/values*`; do\
-		$(MERGE_RES) $$dir $(TMP_DIR)/framework-res/res/`basename $$dir` $(MERGE_RULE); \
-	done
-	$(RM_REDEF) $(TMP_DIR)/framework-res
-	$(hide) for dir in `ls -d $(OVERLAY_RES_DIR)/[^v]* 2>/dev/null`; do\
-          cp -r $$dir $(TMP_DIR)/framework-res/res; \
-	done
-	$(hide) for dir in `ls -d $(OVERLAY_RES_DIR)/values* 2>/dev/null`; do\
-          $(MERGE_RES) $$dir $(TMP_DIR)/framework-res/res/`basename $$dir` $(MERGE_RULE); \
-	done
-	$(APKTOOL) b $(TMP_DIR)/framework-res $@
+	#for call ./customize_framework-res.sh
+	$(hide) $(ADDLEWARES) $(TMP_DIR)/framework-res/res $(TMP_DIR)/framework-res/res
+	$(hide) $(AAPT) p -f -x --min-sdk-version $(subst v,,$(ANDROID_PLATFORM)) --target-sdk-version $(subst v,,$(ANDROID_PLATFORM)) \
+		$(addprefix -S ,$(wildcard $(OVERLAY_RES_DIR))) \
+		-S $(TMP_DIR)/framework-res/res -A $(TMP_DIR)/framework-res/assets \
+		-M $(TMP_DIR)/framework-res/AndroidManifest.xml -F $@
 	@echo "9Patch png fix $@..."
-	$(FIX_9PATCH_PNG) framework-res $(STOCKROM_DIR)/system/framework $(TMP_DIR) $(LEWA_OVERLAY_RES_DIR) $(OVERLAY_RES_DIR)
+	#$(FIX_9PATCH_PNG) framework-res $(STOCKROM_DIR)/system/framework $(TMP_DIR) $(LEWA_OVERLAY_RES_DIR) $(OVERLAY_RES_DIR)
 	@echo "fix $@ completed!"
 	$(APKTOOL) if $@
 	@echo "<<< build $@ completed!"
@@ -216,17 +207,15 @@ $(TMP_DIR)/framework-res.apk: $(TMP_DIR)/apktool-if $(framework-res-source-files
 $(TMP_DIR)/lewa-res.apk: $(TMP_DIR)/framework-res.apk $(OUT_JAR_PATH)/lewa-res.apk
 	@echo ">>> build $@..."
 	$(hide) rm -rf $(TMP_DIR)/lewa-res
-	$(APKTOOL) d -f $(OUT_JAR_PATH)/lewa-res.apk $(TMP_DIR)/lewa-res
+	$(APKTOOL) d -f -t lewa $(OUT_JAR_PATH)/lewa-res.apk $(TMP_DIR)/lewa-res
+	$(hide) sed -i "/tag:/d" $(TMP_DIR)/lewa-res/apktool.yml
 	$(hide) rm -rf $(TMP_DIR)/lewa-res/res
-	$(hide) cp -r $(LEWA_RES_DIR) $(TMP_DIR)/lewa-res
-	$(hide) for dir in `ls -d $(OVERLAY_LEWA_RES_DIR)/[^v]*`; do\
-          cp -r $$dir $(TMP_DIR)/lewa-res/res; \
-        done
-	$(hide) for dir in `ls -d $(OVERLAY_LEWA_RES_DIR)/values*`; do\
-		$(MERGE_RES) $$dir $(TMP_DIR)/lewa-res/res/`basename $$dir` $(MERGE_RULE); \
-	done
 	$(hide) sed -i "s/- 1/- 1\n  - 2\n  - 3\n  - 4\n  - 5\n  - 6\n  - 7\n  - 8/g" $(TMP_DIR)/lewa-res/apktool.yml
-	$(APKTOOL) b $(TMP_DIR)/lewa-res $@
+	$(hide) $(AAPT) p -f -x --auto-add-overlay \
+		--min-sdk-version $(subst v,,$(ANDROID_PLATFORM)) --target-sdk-version $(subst v,,$(ANDROID_PLATFORM)) \
+        $(addprefix -S ,$(wildcard $(OVERLAY_LEWA_RES_DIR))) \
+		-S $(LEWA_RES_DIR) -M $(TMP_DIR)/lewa-res/AndroidManifest.xml \
+		-I $(APKTOOL_IF_RESULT_FILE)/1.apk -I $(APKTOOL_IF_RESULT_FILE)/8.apk -F $@
 	@echo "<<< build $@ completed!"
 
 #
@@ -240,6 +229,43 @@ $(1): $(ZIP_FILE)
 	echo system/$(2)/$(1).apk does not exist, ignored!;  fi
 	$(hide) rm -f $(TMP_DIR)/system/$(2)/$(1).apk
 
+endef
+
+# To decide dir of the apk
+# $1 the apk name
+define MOD_DIR_template
+ifeq ($(USE_ANDROID_OUT),true)
+ifeq ($(wildcard $(ANDROID_OUT)/system/priv-app/$(1).apk),$(wildcard $(STOCKROM_DIR)/system/priv-app/$(1).apk))
+	$(call SIGN_template,$(TMP_DIR)/$(1).apk,/system/app/$(1).apk)
+else
+	$(call SIGN_template,$(TMP_DIR)/$(1).apk,/system/priv-app/$(1).apk)
+endif
+else
+ifeq ($(wildcard $(RELEASE_PATH)/$(DENSITY)/system/priv-app/$(1).apk),$(wildcard $(STOCKROM_DIR)/system/priv-app/$(1).apk))
+	$(call SIGN_template,$(TMP_DIR)/$(1).apk,/system/app/$(1).apk)
+else
+	$(call SIGN_template,$(TMP_DIR)/$(1).apk,/system/priv-app/$(1).apk)
+endif
+endif
+endef
+
+# To decide dir of the apk
+# $1 the apk name
+# $2: to specify if the smali files should be decoded from LEWA first
+define APP_DIR_template
+ifeq ($(USE_ANDROID_OUT),true)
+ifeq ($(wildcard $(ANDROID_OUT)/system/priv-app/$(1).apk),)
+	$(call APP_template,$(1),$(1),$(2),app)
+else
+	$(call APP_template,$(1),$(1),$(2),priv-app)
+endif
+else
+ifeq ($(wildcard $(RELEASE_PATH)/$(DENSITY)/system/priv-app/$(1).apk),)
+	$(call APP_template,$(1),$(1),$(2),app)
+else
+	$(call APP_template,$(1),$(1),$(2),priv-app)
+endif
+endif
 endef
 
 #
@@ -270,7 +296,7 @@ endef
 # $2: the dir name
 define BUILD_CLEAN_APP_template
 ifeq ($(USE_ANDROID_OUT),true)
-$(OUT_APK_PATH)/$(1).apk:
+$(OUT_APK_PATH:app=$(2))/$(1).apk:
 	$(MAKE_ATTOP) $(1)
 
 CLEANLEWAAPP += clean-$(1)
@@ -281,9 +307,9 @@ endef
 
 define RELEASE_LEWA_APP_template
 ifeq ($(USE_ANDROID_OUT),true)
-RELEASE_LEWA += $(RELEASE_PATH)/$(DENSITY)/system/app/$(1).apk
-$(RELEASE_PATH)/$(DENSITY)/system/app/$(1).apk: $(OUT_APK_PATH)/$(1).apk
-	$(hide) mkdir -p $(RELEASE_PATH)/$(DENSITY)/system/app
+RELEASE_LEWA += $(RELEASE_PATH)/$(DENSITY)/system/$(2)/$(1).apk
+$(RELEASE_PATH)/$(DENSITY)/system/$(2)/$(1).apk: $(OUT_APK_PATH:app=$(2))/$(1).apk
+	$(hide) mkdir -p $(RELEASE_PATH)/$(DENSITY)/system/$(2)
 	$(hide) cp $$< $$@
 endif
 endef
@@ -301,13 +327,18 @@ $(foreach jar, $(PHONE_JARS), \
 
 $(foreach app, $(APPS), \
 	$(eval $(call APP_template,$(app),$(app))))
+
 $(foreach app, $(LEWAAPPS_MOD), \
 	$(eval $(call APP_template,$(app),$(app),$(TMP_DIR)/$(app))))
 
 $(foreach app, $(APPS) $(LEWAAPPS_MOD), \
 	$(eval $(call SIGN_template,$(TMP_DIR)/$(app).apk,/system/app/$(app).apk)))
+
 $(foreach app, $(LEWAAPPS), \
 	$(eval $(call SIGN_template,$(OUT_APK_PATH)/$(app).apk,/system/app/$(app).apk)))
+
+$(foreach app, $(PRIV_LEWAAPPS) , \
+	$(eval $(call SIGN_template,$(OUT_APK_PATH:app=priv-app)/$(app).apk,/system/priv-app/$(app).apk)))
 
 $(eval $(call SIGN_template,$(TMP_DIR)/lewa-res.apk,/system/framework/lewa-res.apk))
 
@@ -315,10 +346,18 @@ $(eval $(call SIGN_template,$(TMP_DIR)/framework-res.apk,/system/framework/frame
 
 $(foreach app, $(LEWAAPPS) $(LEWAAPPS_MOD), $(eval $(call BUILD_CLEAN_APP_template,$(app))))
 
+$(foreach app, $(PRIV_LEWAAPPS), $(eval $(call BUILD_CLEAN_APP_template,$(app),priv-app)))
+
 $(foreach app, $(ALL_LEWAAPPS), $(eval $(call RELEASE_LEWA_APP_template,$(app))))
+
+$(foreach app, $(ALL_PRIV_LEWAAPPS), $(eval $(call RELEASE_LEWA_APP_template,$(app),priv-app)))
 
 $(foreach app, $(APPS), \
 	$(eval $(call APP_WS_template,$(app),app)))
+
+$(foreach app, $(APPS), \
+	$(eval $(call APP_WS_template,$(app),priv-app)))
+
 $(eval $(call APP_WS_template,framework-res,framework))
 
 # for release
@@ -343,15 +382,27 @@ $(ZIP_FILE):
 	$(hide) cd $(STOCKROM_DIR) && $(ZIP) -r ../$(ZIP_FILE) ./
 	$(hide) touch .delete-zip-file-when-clean
 
+# if the zip dir does not exist, would try to unzip stockrom.zip
+$(STOCKROM_DIR): $(ZIP_FILE)
+	$(UNZIP) -n $(ZIP_FILE) -d $@
+
 $(ZIP_DIR): $(ZIP_FILE) | $(TMP_DIR)
 	$(UNZIP) $(ZIP_FILE) -d $@
 ifneq ($(strip $(local-phone-apps)),)
 	$(hide) mv $(ZIP_DIR)/system/app $(ZIP_DIR)/system/app.original
 	$(hide) mkdir $(ZIP_DIR)/system/app
 	$(hide) for apk in $(local-phone-apps); do\
-		cp $(ZIP_DIR)/system/app.original/$${apk}.apk $(ZIP_DIR)/system/app; \
+		cp $(ZIP_DIR)/system/app.original/$$apk.apk $(ZIP_DIR)/system/app; \
 	done
 	$(hide) rm -rf $(ZIP_DIR)/system/app.original
+endif
+ifneq ($(strip $(local-phone-priv-apps)),)
+	$(hide) mv $(ZIP_DIR)/system/priv-app $(ZIP_DIR)/system/priv-app.original
+	$(hide) mkdir $(ZIP_DIR)/system/priv-app
+	$(hide) for apk in $(local-phone-priv-apps); do\
+		cp $(ZIP_DIR)/system/priv-app.original/$$apk.apk $(ZIP_DIR)/system/priv-app; \
+	done
+	$(hide) rm -rf $(ZIP_DIR)/system/priv-app.original
 endif
 
 remove-rund-apks:
@@ -373,7 +424,7 @@ ifeq ($(USE_ANDROID_OUT),true)
 RELEASE_LEWA += release-lewa-prebuilt
 endif
 	
-target_files: | $(ZIP_DIR)
+target_files: $(STOCKROM_DIR) | $(ZIP_DIR) 
 target_files: $(TMP_DIR)/lewa-res.apk $(ZIP_BLDJARS) $(TOZIP_APKS) add-lewa-prebuilt $(ACT_PRE_ZIP)
 
 # Target to make zipfile which is all signed by testkey. convenient for developement and debug

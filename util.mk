@@ -93,7 +93,7 @@ clean:
 	$(hide) if [ -f ".delete-zip-file-when-clean" ]; then rm $(ZIP_FILE); fi
 	$(hide) rm -f .delete-zip-file-when-clean
 	$(hide) rm -rf $(TMP_DIR)
-	$(hide) rm -f $(OUT_APK_PATH)/*.apk-tozip $(OUT_JAR_PATH)/*-tozip
+	$(hide) rm -f $(OUT_APK_PATH)/*.apk-tozip $(OUT_APK_PATH:app=priv-app)/*.apk-tozip $(OUT_JAR_PATH)/*-tozip
 	$(hide) rm -f releasetools.pyc
 	$(hide) rm -f $(TOOL_DIR)/releasetools/common.pyc $(TOOL_DIR)/releasetools/edify_generator.pyc
 	@echo clean completed!
@@ -222,5 +222,5 @@ ota-base-restore: $(use_previous_target_file)
 	rm -rf /tmp/SYSTEM/app
 
 lewa-apps-included:
-	@echo $(addsuffix .apk,$(private-lewa-apps) $(private-preinstall-apps) lewa-res)
+	@echo $(addsuffix .apk,$(private-lewa-apps) $(private-lewa-priv-apps) $(private-preinstall-apps) lewa-res)
 

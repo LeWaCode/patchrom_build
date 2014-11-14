@@ -1,11 +1,35 @@
+private-lewa-priv-apps := CalendarProvider \
+            ContactsProvider \
+            SettingsProvider \
+            LIPService \
+            SystemUI \
+            LewaRoundR \
+            MediaProvider \
+            TeleService \
+            DownloadProvider \
+            PIM \
+            BackupRestoreConfirmation \
+            Keyguard \
+            Shell \
+            OneTimeInitializer \
+            VpnDialogs \
+            FusedLocation \
+            InputDevices \
+            DefaultContainerService \
+            LewaSettings \
+            ExternalStorageProvider \
+            ProxyHandler \
+            SharedStorageBackup \
+            Tag \
+            WallpaperCropper
+
+
 private-lewa-apps := \
             LewaAppStore \
             Bluetooth \
             LewaCit \
-            CalendarProvider \
-            ContactsProvider \
+            Email \
             LewaDeskClock \
-            DownloadProvider \
             DownloadProviderUi \
             LewaFlashlight \
             LewaGameCenter \
@@ -23,7 +47,6 @@ private-lewa-apps := \
             LewaPackageInstaller \
             LewaPermManager \
             LewaPond \
-            LewaPush \
             LewaSecurity2 \
             LewaSoundRecorder \
             LewaSystemClean \
@@ -32,34 +55,35 @@ private-lewa-apps := \
             LewaWeather \
             LocationProvider \
             MmsFavoriteProvider \
-            MediaProvider \
-            NetworkLocation \
-            Phone \
             Provision \
-            PIM \
             LewaPower+ \
             LewaQrcodeScanner \
             LewaSearch \
-            Settings \
-            SettingsProvider \
-            SystemUI \
             TelephonyProvider \
             LewaThemeChooser \
             LewaThemeManager \
             LewaVirusDefense \
-            FusedLocation \
             LewaPlayer \
             LewaCompass \
-            Email \
             LewaSensorProvider \
             LewaBirdView \
             LewaYellowPages \
             YellowpagesProvider \
-            LewaRoundR
+            CertInstaller \
+            DocumentsUI \
+            Exchange2 \
+            HTMLViewer \
+            InCallUI \
+            LewaNotifilter \
+            LewaPond \
+            LiveWallpapers \
+            LiveWallpapersPicker \
+            PackageInstaller \
+            UserDictionaryProvider
+             
 
 private-google-frameworks := \
             OneTimeInitializer \
-            NetworkLocation \
             MediaUploader \
             ChromeBookmarksSyncAdapter \
             GoogleBackupTransport \
@@ -82,6 +106,6 @@ private-preinstall-apps := \
 private-lewa-jars := \
             android.policy \
             framework \
-            framework_ext \
+            framework2 \
             telephony-common \
             services

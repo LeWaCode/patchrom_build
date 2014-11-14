@@ -1,9 +1,4 @@
-add-prebuilt-app-jellybean:
-	@echo To add prebuilt apps
-	$(hide) mkdir -p $(ZIP_DIR)/data/media
-	$(hide) cp -rf $(DATAOUT_DIR)/media/preinstall_apps/ $(ZIP_DIR)/data/media/
-
-add-prebuilt-app-jellybean42:
+add-prebuilt-app-kitkat:
 	@echo To add prebuilt apps
 	$(hide) mkdir -p $(ZIP_DIR)/system/vendor/operator/app
 	$(hide) cp -f $(DATAOUT_DIR)/media/preinstall_apps/* $(ZIP_DIR)/system/vendor/operator/app/
@@ -61,7 +56,6 @@ add-prebuilt-fonts:
 	
 add-prebuilt-google-files:
 	@echo To add prebuilt google files
-	$(hide) cp -f $(SYSOUT_DIR)/app/NetworkLocation.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/ChromeBookmarksSyncAdapter.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleCalendarSyncAdapter.apk $(ZIP_DIR)/system/app/
 	$(hide) cp -f $(SYSOUT_DIR)/app/GoogleContactsSyncAdapter.apk $(ZIP_DIR)/system/app/
